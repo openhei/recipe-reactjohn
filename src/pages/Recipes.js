@@ -4,10 +4,31 @@ import Search from '../components/Search'
 import { recipeData } from '../data/tempList'
 
 export default class Recipes extends Component {
+  constructor(props) {
+    super(props)
+    this.getRecipes = this.getRecipes.bind(this)
+  }
   state = {
     recipes: recipeData,
-    search: ''
+    search: '',
+    url: `https://www.food2fork.com/api/search?key=${process.env.REACT_APP_API_KEY}`
   }
+
+  componentDidMount() {
+    this.getRecipes()
+  }
+  async getRecipes() {
+    try {
+      const data = await fetch(this.state.url)
+      const jsonData = await data.json()
+      this.setState({
+        recipes: jsonData.recipes
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   handleChange = event => {
     this.setState({
       search: event.target.value
