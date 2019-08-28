@@ -4,9 +4,6 @@ import Search from '../components/Search'
 import { recipeData } from '../data/tempList'
 
 export default class Recipes extends Component {
-  constructor(props) {
-    super(props)
-  }
   state = {
     recipes: recipeData,
     search: ''
